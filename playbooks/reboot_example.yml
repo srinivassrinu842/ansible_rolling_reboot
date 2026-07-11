@@ -1,0 +1,24 @@
+---
+- name: OpenShift Rolling Reboot Playbook
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Perform parallel rolling reboot of cluster nodes
+      openshift.maintenance.openshift_rolling_reboot:
+        nodes:
+          - worker-0.example.com
+          - worker-1.example.com
+          - worker-2.example.com
+          - worker-3.example.com
+        parallel: 2
+        reboot_method: oc_debug
+        drain_timeout: 300
+        reboot_timeout: 450
+        uncordon: true
+        api_host: https://api.openshift.example.com:6443
+        api_key: sha256~xxxxxx
+      register: reboot_result
+
+    - name: Show reboot results
+      ansible.builtin.debug:
+        var: reboot_result
