@@ -5,6 +5,10 @@ readme: README.md
 authors:
   - Antigravity
 description: Collection for OpenShift Node Maintenance and Rolling Reboot orchestration
-license: Apache-2.0
-repository: https://github.com/example/openshift_maintenance
+license:
+  - Apache-2.0
+repository: https://github.com/srinivassrinu842/ansible_rolling_reboot
+tags:
+  - infrastructure
+  - tools
 dependencies: {}
