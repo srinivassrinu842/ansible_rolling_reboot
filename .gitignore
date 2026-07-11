@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+openshift-maintenance-*.tar.gz
+*.egg-info/
+dist/
+build/
+
+# Credentials and secrets
+.env
+.env.*
+*.pem
+*.key
+kubeconfig*
+credentials*
+private_key*
+
+# System files
+.DS_Store
