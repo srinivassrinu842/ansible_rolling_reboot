@@ -1,0 +1,22 @@
+---
+- name: OpenShift Rolling Reboot - Custom Command Strategy
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Perform parallel rolling reboot using custom command (IPMI example)
+      openshift.maintenance.openshift_rolling_reboot:
+        nodes:
+          - worker-0.example.com
+          - worker-1.example.com
+        parallel: 2
+        reboot_method: command
+        # {node} will be automatically substituted by the actual node name
+        custom_reboot_command: "ipmitool -H {node}-ilo.example.com -U admin -P secret power reset"
+        drain_timeout: 300
+        reboot_timeout: 600
+        uncordon: true
+      register: reboot_result
+
+    - name: Show reboot results
+      ansible.builtin.debug:
+        var: reboot_result

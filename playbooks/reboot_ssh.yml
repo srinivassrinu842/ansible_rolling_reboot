@@ -1,0 +1,22 @@
+---
+- name: OpenShift Rolling Reboot - SSH Strategy
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Perform parallel rolling reboot via SSH
+      openshift.maintenance.openshift_rolling_reboot:
+        nodes:
+          - worker-0.example.com
+          - worker-1.example.com
+        parallel: 2
+        reboot_method: ssh
+        ssh_user: core
+        ssh_key: /home/user/.ssh/id_rsa
+        drain_timeout: 300
+        reboot_timeout: 450
+        uncordon: true
+      register: reboot_result
+
+    - name: Show reboot results
+      ansible.builtin.debug:
+        var: reboot_result

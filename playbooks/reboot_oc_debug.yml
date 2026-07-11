@@ -1,0 +1,23 @@
+---
+- name: OpenShift Rolling Reboot - OC Debug Strategy
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Perform parallel rolling reboot using oc debug
+      openshift.maintenance.openshift_rolling_reboot:
+        nodes:
+          - worker-0.example.com
+          - worker-1.example.com
+        parallel: 2
+        reboot_method: oc_debug
+        drain_timeout: 300
+        reboot_timeout: 450
+        uncordon: true
+        # Authentication credentials (optional if already logged in via CLI)
+        api_host: https://api.openshift.example.com:6443
+        api_key: sha256~xxxxxx
+      register: reboot_result
+
+    - name: Show reboot results
+      ansible.builtin.debug:
+        var: reboot_result
